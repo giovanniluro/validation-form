@@ -1,13 +1,35 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+interface ContainerProps {
+  transition: string;
+}
+
+interface ProgressProps {
+  progress: number;
+}
+
+export const Container = styled.div<ContainerProps>`
   padding: 40px;
-  overflow: hidden;
-  height: 100%;
+  height: 98%;
+  animation: swipefromright .4s backwards;
+  animation-delay: .8s;
+  overflow: auto;
 
+  ${props => props.transition==='true' && css`
+    animation: swipetoleft .2s forwards;
+  `}
   /* Mobile */
   @media(max-width: 450px) {
     padding: 20px;
+
+    form {
+      h4 {
+        font-size: 18px;
+      }
+      h3 {
+        font-size: 16px;
+      }
+    }
   }
 
   form {
@@ -15,6 +37,16 @@ export const Container = styled.div`
     flex-direction: column;
     height: 100%;
     position: relative;
+
+    h4 {
+      text-align: justify;
+    }
+
+    h3 {
+      margin-top: 20px;
+      font-weight: 500;
+      text-align: justify;
+    }
 
     label {
       margin-top: 40px;
@@ -64,6 +96,18 @@ export const Container = styled.div`
 
           }
         }
+
+        /* Mobile */
+        @media(max-width: 450px) {
+          input {
+            width: 100%;
+
+            &:focus {
+              width: 100%;
+              transform: translateY(3px);
+            }
+          }
+        }
       }
     }
 
@@ -87,6 +131,26 @@ export const Container = styled.div`
             p {
               display: flex;
               animation: fadein .4s;
+            }
+          }
+        }
+        @media(max-width: 450px) {
+          flex-direction: column;
+
+          > div {
+            margin: 0;
+            margin-top: 8px;
+            justify-content: flex-start;
+
+            p {
+              position: relative;
+              display: inline-block;  
+              padding: 3px;
+              font-size: 12px;
+              bottom: 0;
+              flex: 1;
+              margin-left: 10px;
+              text-align: center;
             }
           }
         }
@@ -143,28 +207,72 @@ export const Container = styled.div`
   }
 
   @keyframes fall {
-  0% {
-    opacity: 0;
-    transform: translateY(-80px);
+    0% {
+      opacity: 0;
+      transform: translateY(-80px);
+    }
+    60% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    70% {
+      transform: translateY(4px);
+    }
+    80% {
+      transform: translateY(0px); 
+    }
+    90% {
+      transform: translateY(4px);
+    }  0% {
+      opacity: 0;
+      transform: translateY(-80px);
+    }
+    60% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    70% {
+      transform: translateY(4px);
+    }
+    80% {
+      transform: translateY(0px); 
+    }
+    90% {
+      transform: translateY(4px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(0);
+    }
   }
-  60% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  70% {
-    transform: translateY(4px);
-  }
-  80% {
-    transform: translateY(0px); 
-  }
-  90% {
-    transform: translateY(4px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
 
+  @keyframes swipefromright {
+    from {
+      opacity: 0;
+      transform: translateX(50vh);
+    } to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
 
+  @keyframes swipetoleft {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    } to {
+      opacity: 0;
+      transform: translateX(-50vh);
+    }
+  }
+`
 
+export const Progress = styled.div<ProgressProps>`
+  
+  width: ${props =>props.progress*20}%;
+  height: 2%;
+  transition: .6s;
+  background: #344966;
 `

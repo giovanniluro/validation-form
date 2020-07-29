@@ -4,7 +4,7 @@ export default createGlobalStyle`
 
   html {
 
-    height: 110%;
+    height: 130%;
     width: 100%;
 
     @media(min-width: 1000px){

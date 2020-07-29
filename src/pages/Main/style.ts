@@ -36,10 +36,12 @@ export const Content = styled.div`
   margin-top: -40px;
   box-shadow: 0 0 8px 4px rgba(0,0,0,0.3);
   animation: popup .8s;
+  overflow: hidden;
   
   /* Mobile */
   @media(max-width: 450px) {
     width: 80%;
+    overflow: auto;
   }
 
   @keyframes popup {
