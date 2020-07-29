@@ -7,7 +7,7 @@ export default createGlobalStyle`
     height: 800px;
     width: 100%;
 
-    @media(min-width: 1000px){
+    @media(min-width: 1000px) and (min-height: 801px){
       overflow: hidden;
       height: 100%;
       width: 100%;
@@ -24,6 +24,10 @@ export default createGlobalStyle`
     padding: 0;
     margin: 0;
     font-family: 'Mulish', sans-serif;
+  }
+
+  button {
+    cursor: pointer;
   }
 
 `;
