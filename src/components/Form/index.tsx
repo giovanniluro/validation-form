@@ -46,11 +46,13 @@ const Form: React.FC = () => {
       inputPasswordConfirmation.current?.classList.remove('error');
 
       if (password.length < 6) {
+        console.log(password.length);
         inputPassword.current?.classList.add('error');
         err++;
       }
 
-      if (email.split('@').length !== 2) {
+      if (password !== passwordConfirmation) {
+        console.log(passwordConfirmation, password);
         inputPasswordConfirmation.current?.classList.add('error');
         err++;
       }
@@ -58,12 +60,10 @@ const Form: React.FC = () => {
       if (err === 0) {
         setTransition('true');
       }
-
-
     }
 
 
-  }, [name, email]);
+  }, [name, email, page, password, passwordConfirmation]);
 
   const handlePageTransition = useCallback((e) => {
     if (e.animationName === 'swipetoleft') {
@@ -118,7 +118,7 @@ const Form: React.FC = () => {
             <label ref={inputPassword}>
               <h4>Sua senha:</h4>
               <div>
-                <input type='password' />
+                <input type='password' value={password} onChange={e => setPassword(e.target.value)}/>
                 <div>
                   <FiAlertCircle size={20} color="#FF4E47" />
                   <p>Sua senha deve ter no mínimo 6 dígitos!</p>
@@ -129,7 +129,7 @@ const Form: React.FC = () => {
             <label ref={inputPasswordConfirmation}>
               <h4>Sua senha:</h4>
               <div>
-                <input type='password' />
+                <input type='password' value={passwordConfirmation} onChange={e => setPasswordConfirmation(e.target.value)} />
                 <div>
                   <FiAlertCircle size={20} color="#FF4E47" />
                   <p>As senhas devem ser iguais</p>

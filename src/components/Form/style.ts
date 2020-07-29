@@ -136,10 +136,13 @@ export const Container = styled.div<ContainerProps>`
         }
         @media(max-width: 450px) {
           flex-direction: column;
+          position: relative;
 
           > div {
+            position: absolute;
+            width: 100%;
             margin: 0;
-            margin-top: 8px;
+            top: 50px;
             justify-content: flex-start;
 
             p {
