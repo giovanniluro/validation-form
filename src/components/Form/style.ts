@@ -2,6 +2,9 @@ import styled, { css } from 'styled-components';
 
 interface ContainerProps {
   transition: string;
+  backwards: string;
+  backwardAppear: string;
+  forwardAppear: string;
 }
 
 interface ProgressProps {
@@ -11,13 +14,28 @@ interface ProgressProps {
 export const Container = styled.div<ContainerProps>`
   padding: 40px;
   height: 98%;
-  animation: swipefromright .4s backwards;
-  animation-delay: .8s;
+  width: 100%;
+  animation: none;
   overflow: auto;
+  transition: .4s;
 
-  ${props => props.transition==='true' && css`
-    animation: swipetoleft .2s forwards;
+  ${props => props.transition === 'true' && css`
+    animation: swipetoleft .3s forwards;
   `}
+
+  ${props => props.backwards === 'true' && css`
+    animation: swipetoright .3s;
+  `}
+
+  ${props => props.backwardAppear === 'true' && css`
+    animation: swipefromleft .4s backwards;
+  `}
+
+  ${props => props.forwardAppear === 'true' && css`
+    animation: swipefromright .4s backwards;
+  `}
+
+
   /* Mobile */
   @media(max-width: 450px) {
     padding: 20px;
@@ -28,6 +46,60 @@ export const Container = styled.div<ContainerProps>`
       }
       h3 {
         font-size: 16px;
+      }
+    }
+  }
+
+  .thanks {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+    h2 {
+      text-align: center;
+      padding: 20px;
+      font-size: 16px;
+    }
+
+    > svg path{
+      stroke-dashoffset: 0;
+      stroke-dasharray: 100;
+      animation: iconshow 1.8s backwards ease-out;
+      animation-delay: .8s;
+      color: #344966;
+    }
+
+    > svg polyline {
+      stroke-dashoffset: 0;
+      stroke-dasharray: 100;
+      animation: iconshow 1s backwards linear;
+      animation-delay: 1.3s;
+      color: green;
+    }
+
+    > button {
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0;
+      background: #344966;
+      color: white;
+      font-weight: bold;
+      border: 0;
+      width: 40%;
+      bottom: 20px;
+      font-size: 18px;
+
+      &:focus {
+        outline: 0;
+      }
+
+      /* Mobile */
+      @media(max-width: 450px) {
+        width: 100%;
       }
     }
   }
@@ -160,14 +232,17 @@ export const Container = styled.div<ContainerProps>`
       }    
     }
 
-    button {
-      padding: 20px 0;
+    > button {
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0;
       background: #344966;
       color: white;
       font-weight: bold;
       border: 0;
       width: 40%;
-      justify-self: end;
       bottom: 20px;
       margin-top: auto;
 
@@ -180,6 +255,31 @@ export const Container = styled.div<ContainerProps>`
         width: 100%;
       }
       
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin: auto 0;
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 0;
+        background: #344966;
+        color: white;
+        font-weight: bold;
+        border: 0;
+        width: 40%;
+        justify-self: end;
+        bottom: 20px;
+        margin-top: auto;
+
+        &:focus {
+          outline: 0;
+        }
+      }
     }
   }
 
@@ -261,6 +361,18 @@ export const Container = styled.div<ContainerProps>`
     }
   }
 
+  @keyframes swipefromleft {
+    from {
+      opacity: 0;
+      transform: translateX(-50vh);
+    } to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+
+
   @keyframes swipetoleft {
     from {
       opacity: 1;
@@ -270,11 +382,30 @@ export const Container = styled.div<ContainerProps>`
       transform: translateX(-50vh);
     }
   }
+
+  @keyframes swipetoright {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    } to {
+      opacity: 0;
+      transform: translateX(50vh);
+    }
+  }
+
+  @keyframes iconshow {
+    from{
+      stroke-dashoffset: 100;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
 `
 
 export const Progress = styled.div<ProgressProps>`
   
-  width: ${props =>props.progress*20}%;
+  width: ${props => props.progress * 33.4}%;
   height: 2%;
   transition: .6s;
   background: #344966;

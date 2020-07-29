@@ -1,12 +1,24 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Container, Progress } from './style';
-import { FiAlertCircle } from 'react-icons/fi';
+import { FiCheckCircle, FiAlertCircle, FiArrowRight, FiArrowLeft } from 'react-icons/fi';
 import { MdInsertEmoticon } from 'react-icons/md';
 
 
-const Form: React.FC = () => {
+interface FormProps {
+  newForm: (newForm: string) => void;
+  formProps: {
+    id: string;
+    name: string;
+    email: string;
+    password: string;
+    passwordConfirmation: string;
+    page: number;
+  }
+}
 
-  const [name, setName] = useState('Lucas');
+const Form: React.FC<FormProps> = ({ newForm, formProps }) => {
+
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
@@ -14,12 +26,23 @@ const Form: React.FC = () => {
   const inputEmail = useRef<HTMLLabelElement>(null);
   const inputPassword = useRef<HTMLLabelElement>(null);
   const inputPasswordConfirmation = useRef<HTMLLabelElement>(null);
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(1);
   const [transition, setTransition] = useState('false');
+  const [backwards, setBackwards] = useState('false');
+  const [backwardAppear, setBackwardAppear] = useState('false');
+  const [forwardAppear, setForwardAppear] = useState('true');
+
+  useEffect(() => {
+    setName(formProps.name);
+    setPassword(formProps.password);
+    setEmail(formProps.email);
+    setPage(formProps.page);
+    setPasswordConfirmation(formProps.passwordConfirmation);
+  }, [formProps]);
 
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
-
+    console.log(e);
     if (page === 1) {
       let err = 0;
       inputName.current?.classList.remove('error');
@@ -31,6 +54,9 @@ const Form: React.FC = () => {
       }
 
       if (email.split('@').length !== 2) {
+        inputEmail.current?.classList.add('error');
+        err++;
+      } else if (email.split('@')[1].split('.').length < 2) {
         inputEmail.current?.classList.add('error');
         err++;
       }
@@ -68,13 +94,32 @@ const Form: React.FC = () => {
   const handlePageTransition = useCallback((e) => {
     if (e.animationName === 'swipetoleft') {
       setTransition('false');
+      setForwardAppear('true');
       setPage(page => page + 1);
+    }
+
+    if (e.animationName === 'swipetoright') {
+      setBackwards('false');
+      setBackwardAppear('true');
+      setPage(page => page - 1);
+    }
+
+    if (e.animationName === 'swipefromleft') {
+      setBackwardAppear('false');
+    }
+
+    if (e.animationName === 'swipefromright') {
+      setForwardAppear('false');
     }
   }, []);
 
+  const handleDone = useCallback(() => {
+    newForm('true');
+  }, [newForm]);
+
   return (
     <>
-      <Container transition={transition} onAnimationEnd={handlePageTransition}>
+      <Container forwardAppear={forwardAppear} backwardAppear={backwardAppear} backwards={backwards} transition={transition} onAnimationEnd={handlePageTransition}>
         {page === 1 &&
           <form onSubmit={handleSubmit}>
             <h2>Bem vindo(a), vamos começar!</h2>
@@ -107,7 +152,7 @@ const Form: React.FC = () => {
               </div>
             </label>
 
-            <button type='submit' > Próximo </button>
+            <button type='submit' > Próximo <FiArrowRight size={30} /> </button>
           </form>
         }
         {page === 2 &&
@@ -118,7 +163,7 @@ const Form: React.FC = () => {
             <label ref={inputPassword}>
               <h4>Sua senha:</h4>
               <div>
-                <input type='password' value={password} onChange={e => setPassword(e.target.value)}/>
+                <input type='password' value={password} onChange={e => setPassword(e.target.value)} />
                 <div>
                   <FiAlertCircle size={20} color="#FF4E47" />
                   <p>Sua senha deve ter no mínimo 6 dígitos!</p>
@@ -137,8 +182,18 @@ const Form: React.FC = () => {
               </div>
             </label>
 
-            <button> Próximo </button>
+            <div className="buttons">
+              <button type="button" onClick={() => setBackwards('true')}><FiArrowLeft size={30} />Anterior</button>
+              <button type="submit"> Próximo <FiArrowRight size={30} /> </button>
+            </div>
           </form>
+        }
+        {page === 3 &&
+          <div className="thanks">
+            <FiCheckCircle size={150} />
+            <h2>Prontinho {name.split(' ')[0]}, o seu cadastro foi finalizado! ;)</h2>
+            <button onClick={handleDone}>Voltar</button>
+          </div>
         }
       </Container>
       <Progress progress={page} />

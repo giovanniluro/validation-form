@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 //Pallete - https://coolors.co/0d1821-344966-b4cded-f0f4ef-bfcc94
+
+interface ContentProps {
+  newForm: string;
+}
 
 export const Container = styled.div`
   height: 100%;
@@ -29,15 +33,19 @@ export const Body = styled.div`
   }
 `
 
-export const Content = styled.div`
+export const Content = styled.div<ContentProps>`
   background: white;
   max-height: 90%;
-  min-width: 40%;
+  min-width: 70%;
   margin-top: -40px;
   box-shadow: 0 0 8px 4px rgba(0,0,0,0.3);
   animation: popup .8s;
   overflow: hidden;
-  
+
+  ${props => props.newForm === 'true' && css `
+    animation: popdown .8s;
+  `}
+
   /* Mobile */
   @media(max-width: 450px) {
     width: 80%;
@@ -54,6 +62,20 @@ export const Content = styled.div`
     }
     to {
       transform: translateY(0);
+    }
+  }
+
+  @keyframes popdown {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    } 40% {
+      opacity: 1;
+      transform: translateY(-80px);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(50vh);
     }
   }
 

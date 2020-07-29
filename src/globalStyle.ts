@@ -3,8 +3,8 @@ import { createGlobalStyle } from 'styled-components';
 export default createGlobalStyle`
 
   html {
-
-    height: 130%;
+    
+    height: 800px;
     width: 100%;
 
     @media(min-width: 1000px){
