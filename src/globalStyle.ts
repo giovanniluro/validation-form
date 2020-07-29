@@ -3,12 +3,14 @@ import { createGlobalStyle } from 'styled-components';
 export default createGlobalStyle`
 
   html {
-    height: 100%;
+
+    height: 110%;
+    width: 100%;
 
     @media(min-width: 1000px){
-      height: 100vh;
-      width: 100vw;
       overflow: hidden;
+      height: 100%;
+      width: 100%;
     }
   }
 

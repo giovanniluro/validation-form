@@ -10,23 +10,37 @@ export const Container = styled.div`
 export const Header = styled.div`
   background: #344966;
   height: 30%;
+
+  /* Mobile */
+  @media(max-width: 450px) {
+    height: 15%;
+  }
 `
 
 export const Body = styled.div`
   background: #E8EEE7;
   height: 70%;
+  width: 100%;
   display: flex;
   justify-content: center;
+  /* Mobile */
+  @media(max-width: 450px) {
+    height: 85%;
+  }
 `
 
 export const Content = styled.div`
   background: white;
-  height: 90%;
+  max-height: 90%;
   min-width: 40%;
   margin-top: -40px;
   box-shadow: 0 0 8px 4px rgba(0,0,0,0.3);
   animation: popup .8s;
-
+  
+  /* Mobile */
+  @media(max-width: 450px) {
+    width: 80%;
+  }
 
   @keyframes popup {
     from {
