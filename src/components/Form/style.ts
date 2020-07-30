@@ -19,6 +19,11 @@ export const Container = styled.div<ContainerProps>`
   overflow: auto;
   transition: .4s;
 
+  @media(max-width: 900px) and (max-height: 799px){
+    order: 2;
+  }
+
+
   ${props => props.transition === 'true' && css`
     animation: swipetoleft .3s forwards;
   `}
@@ -38,14 +43,21 @@ export const Container = styled.div<ContainerProps>`
 
   /* Mobile */
   @media(max-width: 450px) {
-    padding: 20px;
+    padding: 40px 20px;
 
     form {
-      h4 {
+      h1{
+        font-size: 20px;
+      }
+      h2 {
         font-size: 18px;
       }
-      h3 {
+
+      h4 {
         font-size: 16px;
+      }
+      h3 {
+        font-size: 14px;
       }
     }
   }
@@ -130,14 +142,13 @@ export const Container = styled.div<ContainerProps>`
         input {
           border: 0;
           border-bottom: 3px solid #344966;
-          width: 70%;
+          width: 80%;
           padding: 10px 0;
           transition: .3s;
           font-size: 14px;
 
           &:focus {
             outline: 0;
-            width: 80%;
             transform: translateY(5px);
           }
         }
@@ -405,8 +416,13 @@ export const Container = styled.div<ContainerProps>`
 
 export const Progress = styled.div<ProgressProps>`
   
+  overflow: hidden;
   width: ${props => props.progress * 33.4}%;
   height: 2%;
   transition: .6s;
   background: #344966;
+
+  @media(max-width: 900px) and (max-height: 799px){
+    order: 1;
+  }
 `

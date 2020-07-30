@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Container, Body, Header, Content } from './style';
 import Form from '../../components/Form';
 import { uuid } from 'uuidv4';
+import Social from '../../components/Social';
 
 interface FormData {
   id: string;
@@ -21,10 +22,11 @@ const Main: React.FC = () => {
     name: '',
     password: '',
     passwordConfirmation: '',
-    page: 1
+    page: 2
   });
 
   const handleNewForm = useCallback((e) => {
+
     if (e.animationName === 'popdown') {
       setFormData({
         id: uuid(),
@@ -34,8 +36,10 @@ const Main: React.FC = () => {
         passwordConfirmation: '',
         page: 1
       });
+
       setNewForm('false');
     }
+
   }, [setFormData, setNewForm]);
 
   useEffect(() => {
@@ -45,7 +49,7 @@ const Main: React.FC = () => {
   return (
     <Container>
       <Header>
-
+        <Social />
       </Header>
       <Body>
         <Content newForm={newForm} onAnimationEnd={handleNewForm}>

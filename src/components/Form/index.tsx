@@ -40,6 +40,8 @@ const Form: React.FC<FormProps> = ({ newForm, formProps }) => {
     setPasswordConfirmation(formProps.passwordConfirmation);
   }, [formProps]);
 
+
+//Submiting forms and validating each page
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
     console.log(e);
@@ -91,6 +93,7 @@ const Form: React.FC<FormProps> = ({ newForm, formProps }) => {
 
   }, [name, email, page, password, passwordConfirmation]);
 
+//Page forward and backward transition
   const handlePageTransition = useCallback((e) => {
     if (e.animationName === 'swipetoleft') {
       setTransition('false');
@@ -112,7 +115,7 @@ const Form: React.FC<FormProps> = ({ newForm, formProps }) => {
       setForwardAppear('false');
     }
   }, []);
-
+//Creating a new empty form when the current is done
   const handleDone = useCallback(() => {
     newForm('true');
   }, [newForm]);
@@ -172,7 +175,7 @@ const Form: React.FC<FormProps> = ({ newForm, formProps }) => {
             </label>
 
             <label ref={inputPasswordConfirmation}>
-              <h4>Sua senha:</h4>
+              <h4>Confirmação:</h4>
               <div>
                 <input type='password' value={passwordConfirmation} onChange={e => setPasswordConfirmation(e.target.value)} />
                 <div>

@@ -13,7 +13,7 @@ export const Container = styled.div`
 
 export const Header = styled.div`
   background: #344966;
-  height: 30%;
+  height: 20%;
 
   /* Mobile */
   @media(max-width: 450px) {
@@ -23,7 +23,7 @@ export const Header = styled.div`
 
 export const Body = styled.div`
   background: #E8EEE7;
-  height: 70%;
+  height: 80%;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -35,6 +35,8 @@ export const Body = styled.div`
 
 export const Content = styled.div<ContentProps>`
   background: white;
+  display: flex;
+  flex-direction: column;
   max-height: 90%;
   min-width: 70%;
   margin-top: -40px;
@@ -48,8 +50,9 @@ export const Content = styled.div<ContentProps>`
 
   /* Mobile */
   @media(max-width: 450px) {
-    width: 80%;
-    overflow: auto;
+    width: 90%;
+    overflow: hidden;
+    border-radius: 14px;
   }
 
   @keyframes popup {
